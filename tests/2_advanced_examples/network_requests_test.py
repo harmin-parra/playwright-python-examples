@@ -8,11 +8,10 @@ from playwright.sync_api import Page, Route, expect
 @pytest.fixture(autouse=True)
 def goto(page: Page):
     page.goto("https://example.cypress.io/commands/network-requests")
-    time.sleep(10)
     yield
-    time.sleep(30)  # If you want to add a pause at the end of each test.
+    time.sleep(2)  # If you want to add a pause at the end of each test.
 
-'''
+
 def test_1(page: Page):
     """ make an XHR request """
     r = requests.get("https://jsonplaceholder.cypress.io/comments")
@@ -61,9 +60,8 @@ def test_4(page: Page):
 def test_5(page: Page):
     """ request() - save response in the shared test context """
     pytest.skip("Same as test_4")
-'''
 
-@pytest.mark.xfail(reason="I can't make this test to pass")
+
 def test_6(page: Page):
     """ route responses to matching requests """
     message = "whoa, this comment does not exist"
@@ -80,10 +78,10 @@ def test_6(page: Page):
     def handle_route(route: Route):
         route.fulfill(
             status=404,
-            body="{'error': '" + message + "'}",
-            headers={"access-control-allow-origin": "*"},
+            json={"error": message},
+            # body=json.dumps({"error": message}),
+            headers={"access-control-allow-origin": "*", "content-type": "application/json"},
         )
     page.route("**/comments/*", handle_route)
     page.locator(".network-put").click()
-    time.sleep(2)
     expect(page.locator(".network-put-comment")).to_contain_text(message)
