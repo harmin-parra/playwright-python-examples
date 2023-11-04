@@ -1,4 +1,3 @@
-import json
 import pytest
 import time
 from playwright.sync_api import Page, Route, expect
