@@ -198,7 +198,8 @@ def test_11(page: Page):
         "    for (opt of elem.selectedOptions)"
         "        values.push(opt.value);"
         "    return values;"
-        "}")
+        "}"
+    )
     assert 'fr-oranges' in options
 
 
