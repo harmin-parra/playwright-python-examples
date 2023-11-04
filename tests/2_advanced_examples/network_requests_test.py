@@ -28,7 +28,7 @@ def test_2(page: Page):
 def test_3(page: Page):
     """ request with query parameters """
     r = requests.get(url="https://jsonplaceholder.cypress.io/comments", params={'postId': 1, 'id': 3})
-    comment = json.loads(r.text[1:-1])
+    comment = json.loads(r.text)[0]
     assert 'postId' in comment
     assert comment['postId'] == 1
     assert 'id' in comment
@@ -38,7 +38,7 @@ def test_3(page: Page):
 def test_4(page: Page):
     """ requests - pass result to the second request """
     r = requests.get("https://jsonplaceholder.cypress.io/users?_limit=1")
-    user = json.loads(r.text[1:-1])
+    user = json.loads(r.text)[0]
     assert isinstance(user['id'], int)
     r = requests.post(
         url="https://jsonplaceholder.cypress.io/posts",
