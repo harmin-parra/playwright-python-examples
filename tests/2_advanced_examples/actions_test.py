@@ -8,7 +8,7 @@ from playwright.sync_api import Page, expect
 def goto(page: Page):
     page.goto("https://example.cypress.io/commands/actions")
     yield
-    time.sleep(2)  # If you want to add a pause at the end of each test.
+    time.sleep(0)  # If you want to add a pause at the end of each test.
 
 
 def test_01(page: Page):
