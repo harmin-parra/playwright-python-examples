@@ -6,7 +6,8 @@ Be aware that some Cypress commands don't have an equivalent in Playwright, thus
 
 If you find a better solution or do you have an alternative solution to one of the tests, please share it with me by raising an [issue](https://github.com/harmin-parra/playwright-python-examples/issues).
 
-To execute the tests:
+---
+### To execute the tests:
 
 1. Download the project
    
