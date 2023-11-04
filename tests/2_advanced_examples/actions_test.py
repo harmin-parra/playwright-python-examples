@@ -191,6 +191,7 @@ def test_11(page: Page):
     expect(select2).to_have_values(['fr-apples', 'fr-oranges', 'fr-bananas'])
     # Don't know how to verify 'fr-oranges' is part of selected options in an elegant way with expect()
     expect(select2).to_have_values([re.compile(".*"), 'fr-oranges', re.compile(".*")])
+    assert 'fr-oranges' in select2.evaluate("elem => $(elem).val()")
     options = select2.evaluate(
         "elem => { "
         "    values = [];"
@@ -198,7 +199,6 @@ def test_11(page: Page):
         "        values.push(opt.value);"
         "    return values;"
         "}")
-    options = select2.evaluate("elem => $(elem).val()")
     assert 'fr-oranges' in options
 
 
