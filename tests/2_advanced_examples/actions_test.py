@@ -146,15 +146,15 @@ def test_10(page: Page):
         boxes.nth(i).uncheck()
         expect(boxes.nth(i)).not_to_be_checked()
 
-    # box = page.locator(".action-check [type='checkbox'][value='checkbox1']")
     boxes = page.locator(".action-check")
+
+    # box1 = page.locator(".action-check [type='checkbox'][value='checkbox1']")
     box1 = boxes.locator("[type='checkbox'][value='checkbox1']")
     box1.check()
     expect(box1).to_be_checked()
     box1.uncheck()
     expect(box1).not_to_be_checked()
 
-    boxes = page.locator(".action-check")
     box1 = boxes.locator("[value='checkbox1']")
     box3 = boxes.locator("[value='checkbox3']")
     box1.check()
