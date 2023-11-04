@@ -9,17 +9,19 @@ If you find a better solution or do you have an alternative solution to one of t
 ---
 ### To execute the tests:
 
-1. Download the project
+1. Install [Playwright](https://playwright.dev/python/docs/intro) for python.
+
+2. Download the project
    
    ``git checkout git@github.com:harmin-parra/playwright-python-examples.git``
 
    or download and unzip the [zip file](https://github.com/harmin-parra/playwright-python-examples/archive/refs/heads/main.zip) of the project
 
-2. Enter the folder of the project
+3. Enter the folder of the project
 
    ``cd playwright-python-examples``
 
-3. Execute the test
+4. Execute the test
 
    * with headless browser
   
