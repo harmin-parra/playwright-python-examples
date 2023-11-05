@@ -1,4 +1,5 @@
 import json
+import os
 import pytest
 import time
 from playwright.sync_api import Page, Route
@@ -14,7 +15,7 @@ def goto(page: Page):
 def test_1(page: Page):
     """ load a fixture """
     def handle_route(route: Route):
-        f = open("fixtures/example.json")
+        f = open(f"fixtures{os.sep}example.json")
         route.fulfill(
             json=json.load(f),
         )
@@ -29,7 +30,7 @@ def test_1(page: Page):
 
 def test_2():
     """ load a fixture """
-    f = open("fixtures/example.json")
+    f = open(f"fixtures{os.sep}example.json")
     requiredExample = json.load(f)
     f.close()
     otherExample = json.loads("""
@@ -49,10 +50,10 @@ def test_3():
 def test_4(page: Page):
     """ write to a file """
     response = page.goto("https://jsonplaceholder.cypress.io/users").body()
-    f = open("fixtures/users.json", "wb")
+    f = open(f"fixtures{os.sep}users.json", "wb")
     f.write(response)
     f.close()
-    f = open("fixtures/users.json")
+    f = open(f"fixtures{os.sep}users.json")
     users = json.load(f)
     f.close()
     assert 'name' in users[0]
