@@ -1,7 +1,7 @@
 import json
 import pytest
 import time
-from playwright.sync_api import Page, Route, expect
+from playwright.sync_api import Page, Route
 
 
 @pytest.fixture(autouse=True)
@@ -33,11 +33,11 @@ def test_2():
     requiredExample = json.load(f)
     f.close()
     otherExample = json.loads("""
-    {
-        "body": "Fixtures are a great way to mock data for responses to routes",
-        "email": "hello@cypress.io",
-        "name": "Using fixtures to represent data"
-    }""")
+        {
+            "body": "Fixtures are a great way to mock data for responses to routes",
+            "email": "hello@cypress.io",
+            "name": "Using fixtures to represent data"
+        }""")
     assert json.dumps(requiredExample, sort_keys=True) == json.dumps(otherExample, sort_keys=True)
 
 
@@ -56,3 +56,11 @@ def test_4(page: Page):
     users = json.load(f)
     f.close()
     assert 'name' in users[0]
+
+
+def test_5(page: Page):
+    """ upload a file """
+    # with page.expect_file_chooser() as fc:
+    #     page.locator('xxx').click()
+    # fc.value.set_files("file.txt")
+    pytest.skip("https://example.cypress.io/commands/files doesn't have a file input")
