@@ -85,3 +85,11 @@ def test_6(page: Page):
     page.route("**/comments/*", handle_route)
     page.locator(".network-put").click()
     expect(page.locator(".network-put-comment")).to_contain_text(message)
+
+
+'''
+    page.route(
+        "**/comments/*",
+        lambda route: route.fulfill(status=400))
+    page.locator(".network-btn").click()
+'''
