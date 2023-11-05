@@ -61,6 +61,14 @@ def test_4(page: Page):
 def test_5(page: Page):
     """ upload a file """
     # with page.expect_file_chooser() as fc:
-    #     page.locator('xxx').click()
-    # fc.value.set_files("file.txt")
+    #     page.locator("xxx").click()
+    # fc.value.set_files("/path/to/file")
     pytest.skip("https://example.cypress.io/commands/files doesn't have a file input")
+
+
+def test_6(page: Page):
+    """ download a file """
+    # with page.expect_download() as download_info:
+    #     page.locator("xxx").click()
+    # download_info.value.save_as("/path/to/file")
+    pytest.skip("https://example.cypress.io/commands/files doesn't have a file to download")
