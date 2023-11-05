@@ -18,9 +18,9 @@ def test_1(page: Page):
     elem = elem.locator("td").first
     expect(elem).to_have_text("Column content")
     expect(elem).to_contain_text("Column content")
-    assert elem.evaluate("elem => { return elem.innerHTML; }") == "Column content"
-    assert elem.evaluate("elem => { return elem.tagName; }").lower() == "td"
-    assert elem.evaluate("elem => { return elem.textContent; }") == "Column content"
+    assert elem.evaluate("elem => elem.innerHTML") == "Column content"
+    assert elem.evaluate("elem => elem.tagName").lower() == "td"
+    assert elem.evaluate("elem => elem.textContent") == "Column content"
     expect(elem).to_have_text(re.compile("column content", re.IGNORECASE))
 
     elem = page.locator(".assertion-table tbody tr").last

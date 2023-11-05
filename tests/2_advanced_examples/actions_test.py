@@ -16,7 +16,7 @@ def test_01(page: Page):
     email = page.locator(".action-email")
     email.fill("fake@email.com")
     expect(email).to_have_value("fake@email.com")
-    assert email.evaluate("elem => { return elem.value }") == "fake@email.com"
+    assert email.evaluate("elem => elem.value") == "fake@email.com"
     assert email.evaluate("elem => $(elem).val()") == "fake@email.com"
     # Special characters
     email.press("ArrowLeft")
@@ -228,7 +228,7 @@ def test_13(page: Page):
     page.mouse.up()
     # Assert 24 <= elem.value <= 26
     expect(elem).to_have_value(re.compile(r"^2[456]$"))
-    assert 24 <= int(elem.evaluate("elem => { return elem.value; }")) <= 25
+    assert 24 <= int(elem.evaluate("elem => elem.value")) <= 25
     assert 24 <= int(elem.evaluate("elem => $(elem).val()")) <= 25
 
 
