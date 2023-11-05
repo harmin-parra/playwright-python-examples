@@ -12,7 +12,7 @@ def goto(page: Page):
 
 
 def test_1(page: Page):
-    """ .expect() - make an assertion about the current subject """
+    """ expect() - make an assertion about the current subject """
     elem = page.locator(".assertion-table tbody tr").last
     expect(elem).to_have_class("success")
     elem = elem.locator("td").first

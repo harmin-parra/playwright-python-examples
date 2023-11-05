@@ -14,7 +14,7 @@ def goto(page: Page):
 
 
 def test_01(page: Page):
-    """ .evaluate() - execute a custom command """
+    """ evaluate() - execute a custom command """
     def console(method="log"):
         assert method in ('log', 'info', 'error', 'warn', 'debug', )
         func = "console.method".replace('method', method)
@@ -38,7 +38,7 @@ def test_04(page: Page):
 
 
 def test_05(page: Page):
-    """ .to_be_hidden() - determine if a DOM element is hidden """
+    """ to_be_hidden() - determine if a DOM element is hidden """
     hidden = page.locator(".dom-p p.hidden").first
     visible = page.locator(".dom-p p.visible").first
 

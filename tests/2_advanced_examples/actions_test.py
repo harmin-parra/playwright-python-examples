@@ -12,7 +12,7 @@ def goto(page: Page):
 
 
 def test_01(page: Page):
-    """ .fill()/press() - type into a DOM element """
+    """ fill()/press() - type into a DOM element """
     email = page.locator(".action-email")
     email.fill("fake@email.com")
     expect(email).to_have_value("fake@email.com")
@@ -36,7 +36,7 @@ def test_01(page: Page):
 
 
 def test_02(page: Page):
-    """ .focus() - focus on a DOM element """
+    """ focus() - focus on a DOM element """
     page.locator(".action-focus").focus()
     expect(page.locator(".action-focus")).to_be_focused()
     # Playwright doesn't have prev() locator
@@ -44,7 +44,7 @@ def test_02(page: Page):
 
 
 def test_03(page: Page):
-    """ .blur() - blur off a DOM element """
+    """ blur() - blur off a DOM element """
     elem = page.locator(".action-blur")
     elem.type("About to blur")
     elem.blur()
@@ -54,7 +54,7 @@ def test_03(page: Page):
 
 
 def test_04(page: Page):
-    """ .clear() - clears an input or textarea element """
+    """ clear() - clears an input or textarea element """
     elem = page.locator(".action-clear")
     elem.fill("Clear this text")
     expect(elem).to_have_value("Clear this text")
@@ -63,7 +63,7 @@ def test_04(page: Page):
 
 
 def test_05(page: Page):
-    """ .click() - submit a form """
+    """ click() - submit a form """
     page.locator(".action-form").locator("[type='text']").fill("HALFOFF")
     page.get_by_role("button", name="Submit").click()
     # Playwright doesn't have next() locator
@@ -71,7 +71,7 @@ def test_05(page: Page):
 
 
 def test_06(page: Page):
-    """ .click() - click on a DOM element """
+    """ click() - click on a DOM element """
     page.locator(".action-btn").click()
     canvas = page.locator("#action-canvas")
     # Playwright doesn't have keyword positions: 'topLeft', 'top', 'topRight', 'left', etc.
@@ -89,21 +89,21 @@ def test_06(page: Page):
 
 
 def test_07(page: Page):
-    """ .dblclick() - double click on a DOM element """
+    """ dblclick() - double click on a DOM element """
     page.locator(".action-div").dblclick()
     expect(page.locator(".action-div")).not_to_be_visible()
     expect(page.locator(".action-input-hidden")).to_be_visible()
 
 
 def test_08(page: Page):
-    """ .rightclick() - right click on a DOM element """
+    """ rightclick() - right click on a DOM element """
     page.locator(".rightclick-action-div").click(button="right")
     expect(page.locator(".rightclick-action-div")).not_to_be_visible()
     expect(page.locator(".rightclick-action-input-hidden")).to_be_visible()
 
 
 def test_09(page: Page):
-    """ .check() - check a checkbox or radio element """
+    """ check() - check a checkbox or radio element """
     boxes = page.locator(".action-checkboxes [type='checkbox'] :enabled")
     for i in range(boxes.count()):
         boxes.nth(i).check()
@@ -140,7 +140,7 @@ def test_09(page: Page):
 
 
 def test_10(page: Page):
-    """ .uncheck() - uncheck a checkbox element """
+    """ uncheck() - uncheck a checkbox element """
     boxes = page.locator(".action-check > :not(.disabled) [type='checkbox']")
     for i in range(boxes.count()):
         boxes.nth(i).uncheck()
@@ -173,7 +173,7 @@ def test_10(page: Page):
 
 
 def test_11(page: Page):
-    """ .select() - select an option in a <select> element """
+    """ select() - select an option in a <select> element """
     select1 = page.locator(".action-select")
     expect(select1).to_have_value("--Select a fruit--")
 
@@ -204,7 +204,7 @@ def test_11(page: Page):
 
 
 def test_12(page: Page):
-    """ .scrollIntoView() - scroll an element into view """
+    """ scrollIntoView() - scroll an element into view """
     button = page.locator("#scroll-horizontal button")
     button.scroll_into_view_if_needed()
     expect(button).to_be_visible()
@@ -219,7 +219,7 @@ def test_12(page: Page):
 
 
 def test_13(page: Page):
-    """ .trigger() - trigger an event on a DOM element """
+    """ evaluate() - trigger an event on a DOM element """
     elem = page.locator(".trigger-input-range")
     width = elem.evaluate("elem => { return elem.getBoundingClientRect().width }")
     elem.hover(position={'x': 0, 'y': 0})
@@ -233,5 +233,5 @@ def test_13(page: Page):
 
 
 def test_14(page: Page):
-    """ cy.scrollTo() - scroll the window or element to a position """
+    """ scrollTo() - scroll the window or element to a position """
     pytest.skip("Playwright doesn't have scrolling built-in functions")

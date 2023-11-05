@@ -11,7 +11,7 @@ def goto(page: Page):
 
 
 def test_1(page: Page):
-    """ .each() - iterate over an array of elements """
+    """ each() - iterate over an array of elements """
     elms = page.locator(".connectors-its-ul>li")
     for i in range(elms.count()):
         elms.nth(i).evaluate(
@@ -28,7 +28,7 @@ def test_2(page: Page):
 
 
 def test_3(page: Page):
-    """ .evaluate() - invoke a function on the current subject """
+    """ evaluate() - invoke a function on the current subject """
     elem = page.locator(".connectors-div")
     expect(elem).not_to_be_visible()
     elem.evaluate("elem => $(elem).show()")

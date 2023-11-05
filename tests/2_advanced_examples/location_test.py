@@ -13,17 +13,15 @@ def goto(page: Page):
 
 def test_1(page: Page):
     """ get the current URL hash """
-    url = page.url
-    res = urlparse(url)
+    res = urlparse(page.url)
     assert res.fragment == ''
 
 
 def test_2(page: Page):
     """ get window.location """
-    url = page.url
-    res = urlparse(url)
+    res = urlparse(page.url)
     assert res.fragment == ''
-    assert url == "https://example.cypress.io/commands/location"
+    assert res.geturl() == "https://example.cypress.io/commands/location"
     assert res.hostname == "example.cypress.io"
     assert res.path == "/commands/location"
     assert res.port is None
