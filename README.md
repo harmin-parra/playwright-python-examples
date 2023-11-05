@@ -31,4 +31,4 @@ If you find a better solution or do you have an alternative solution to one of t
 
      `` pytest --headed tests``
 
-Note: ___Project still in progres.___
+Note: ___project still in progres.___
