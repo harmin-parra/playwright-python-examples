@@ -33,7 +33,7 @@ def test_2(page: Page):
     # Playwright and the Jest 'expect' library don't support assertions chaining
     elem = page.locator(".assertions-link")
     assert "active" in elem.get_attribute("class").split()
-    expect(elem).to_have_class(re.compile("\s*active\s*"))
+    expect(elem).to_have_class(re.compile(r"\bactive\b"))
     expect(elem).to_have_attribute("href", re.compile(".*cypress.io"))
 
 
@@ -67,7 +67,7 @@ def test_5(page: Page):
     elms = page.locator(".docs-header div")
     assert elms.count() == 1
     classes = elms.first.get_attribute("class").split()
-    expect(elms.first).to_have_class(re.compile(r"\s*heading-.*"))
+    expect(elms.first).to_have_class(re.compile(r"\bheading-.*"))
     expect(elms.first).to_contain_text("Introduction")
 
 
@@ -78,7 +78,7 @@ def test_6(page: Page):
         raise Exception("Did not find 1 element")
 
     classes = elms.first.get_attribute("class")
-    if re.search(r"\s*heading-.*", classes) is None:
+    if re.search(r"\bheading-.*", classes) is None:
         raise Exception(f'Could not find class "heading-" in {classes}')
 
 

@@ -16,7 +16,7 @@ def test_1(page: Page):
     firstBtn = (page.locator(".as-table").locator("tbody>tr")
                 .first.locator("td").first.locator("button"))
     firstBtn.click()
-    expect(firstBtn).to_have_class(re.compile(r"\s*btn-success\s*"))
+    expect(firstBtn).to_have_class(re.compile(r"\bbtn-success\b"))
     assert "btn-success" in firstBtn.get_attribute("class").split()
     assert firstBtn.evaluate("elem => $(elem).hasClass('btn-success')")
     expect(firstBtn).to_have_text("Changed")
@@ -28,17 +28,3 @@ def test_2(page: Page):
         page.locator(".network-btn").click()
     response = response_info.value
     assert response.status == 200
-
-
-'''
-    page.route(
-        "**/comments/*",
-        lambda route: route.fulfill(status=400))
-    page.locator(".network-btn").click()
-    # page.goto("https://example.cypress.io/commands/aliasing")
-
-    def handle(route: Route):
-        json = [{"name": "Strawberry", "id": 21}]
-        # fulfill the route with the mock data
-        route.fulfill(json=json)
-'''
