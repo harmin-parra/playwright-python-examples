@@ -13,8 +13,8 @@ def goto(page: Page):
 
 def test_1(page: Page):
     """ variable for a DOM element for later use """
-    firstBtn = (page.locator('.as-table').locator('tbody>tr')
-                .first.locator('td').first.locator('button'))
+    firstBtn = (page.locator(".as-table").locator("tbody>tr")
+                .first.locator("td").first.locator("button"))
     firstBtn.click()
     expect(firstBtn).to_have_class(re.compile(r"\s*btn-success\s*"))
     assert "btn-success" in firstBtn.get_attribute("class").split()
