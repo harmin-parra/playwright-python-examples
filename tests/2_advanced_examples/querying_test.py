@@ -39,7 +39,7 @@ def test_3(page: Page):
     """ query DOM elements within a specific element """
     elem = page.locator(".query-form")
     expect(elem.locator("input").first).to_have_attribute("placeholder", "Email")
-    expect(elem.locator("input").first).to_have_attribute("placeholder", "Password")
+    expect(elem.locator("input").last).to_have_attribute("placeholder", "Password")
 
 
 def test_4(page: Page):
