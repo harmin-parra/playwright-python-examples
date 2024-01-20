@@ -2,7 +2,7 @@ import json
 import pytest
 import requests
 import time
-from playwright.sync_api import Page, Route, expect
+from playwright.sync_api import Page, Route, expect, Playwright
 
 
 @pytest.fixture(autouse=True)
@@ -12,35 +12,56 @@ def goto(page: Page):
     time.sleep(0)  # If you want to add a pause at the end of each test.
 
 
-def test_1(page: Page):
+@pytest.fixture(scope="module")
+def api_request_context(playwright: Playwright):
+    request_context = playwright.request.new_context(base_url="https://jsonplaceholder.cypress.io")
+    yield request_context
+    request_context.dispose()
+
+
+def test_1a_request(api_request_context):
     """ make an XHR request """
-    r = requests.get("https://jsonplaceholder.cypress.io/comments")
-    assert r.status_code == 200
-    assert hasattr(r, 'headers')
-    assert hasattr(r, 'elapsed')
+    # Using Playwright
+    request = api_request_context.get("/comments")
+    assert request.ok
+    assert hasattr(request, "headers")
+    assert len(request.body().decode()) > 500
+
+    # Using Python 'requests' module
+    response = requests.get("https://jsonplaceholder.cypress.io/comments")
+    assert response.status_code == 200
+    assert hasattr(response, 'headers')
+    assert hasattr(response, 'elapsed')
+    assert len(response.text) > 500
 
 
-def test_2(page: Page):
-    """ verify XHR request """
-    pytest.skip("Same as test_1")
-
-
-def test_3(page: Page):
-    """ request with query parameters """
-    r = requests.get(url="https://jsonplaceholder.cypress.io/comments", params={'postId': 1, 'id': 3})
-    comment = json.loads(r.text)[0]
-    assert 'postId' in comment
-    assert comment['postId'] == 1
-    assert 'id' in comment
-    assert comment['id'] == 3
-
-
-def test_4(page: Page):
+def test_1b_request(api_request_context):
     """ requests - pass result to the second request """
-    r = requests.get("https://jsonplaceholder.cypress.io/users?_limit=1")
-    user = json.loads(r.text)[0]
+    # Using Playwright
+    response = api_request_context.get("/users?_limit=1")
+    assert response.ok
+    user = json.loads(response.body().decode())[0]
     assert isinstance(user['id'], int)
-    r = requests.post(
+    response = api_request_context.post(
+        url="/posts",
+        data={
+            'userId': user['id'],
+            'title': 'Cypress Test Runner',
+            'body': 'Fast, easy and reliable testing for anything that runs in a browser.',
+        })
+    assert response.ok
+    response = json.loads(response.body().decode())
+    assert 'title' in response and response['title'] == 'Cypress Test Runner'
+    assert isinstance(response['id'], int)
+    assert response['id'] > 100
+    assert isinstance(response['userId'], int)
+    assert int(response['userId']) == user['id']
+
+    # Using Python 'requests' module
+    response = requests.get("https://jsonplaceholder.cypress.io/users?_limit=1")
+    user = json.loads(response.text)[0]
+    assert isinstance(user['id'], int)
+    response = requests.post(
         url="https://jsonplaceholder.cypress.io/posts",
         data={
             'userId': user['id'],
@@ -48,21 +69,16 @@ def test_4(page: Page):
             'body': 'Fast, easy and reliable testing for anything that runs in a browser.',
         }
     )
-    assert r.status_code == 201
-    res = json.loads(r.text)
-    assert 'title' in res and res['title'] == 'Cypress Test Runner'
-    assert isinstance(res['id'], int)
-    assert res['id'] > 100
-    assert isinstance(res['userId'], str) and res['userId'].isnumeric()
-    assert int(res['userId']) == user['id']
+    assert response.status_code == 201
+    response = json.loads(response.text)
+    assert 'title' in response and response['title'] == 'Cypress Test Runner'
+    assert isinstance(response['id'], int)
+    assert response['id'] > 100
+    assert isinstance(response['userId'], str) and response['userId'].isnumeric()
+    assert int(response['userId']) == user['id']
 
 
-def test_5(page: Page):
-    """ request() - save response in the shared test context """
-    pytest.skip("Same as test_4")
-
-
-def test_6(page: Page):
+def test_2_intercept(page: Page):
     """ route responses to matching requests """
     message = "whoa, this comment does not exist"
     with page.expect_response("**/comments/*") as response_info:
@@ -87,9 +103,26 @@ def test_6(page: Page):
     expect(page.locator(".network-put-comment")).to_contain_text(message)
 
 
-'''
-    page.route(
-        "**/comments/*",
-        lambda route: route.fulfill(status=400))
-    page.locator(".network-btn").click()
-'''
+def test_3(api_request_context):
+    """ request with query parameters """
+    # Using Playwright
+    response = api_request_context.get(
+        url="/comments",
+        params={'postId': 1, 'id': 3}
+    )
+    comment = json.loads(response.text())[0]
+    assert 'postId' in comment
+    assert comment['postId'] == 1
+    assert 'id' in comment
+    assert comment['id'] == 3
+
+    # Using Python 'requests' module
+    response = requests.get(
+        url="https://jsonplaceholder.cypress.io/comments",
+        params={'postId': 1, 'id': 3}
+    )
+    comment = json.loads(response.text)[0]
+    assert 'postId' in comment
+    assert comment['postId'] == 1
+    assert 'id' in comment
+    assert comment['id'] == 3
