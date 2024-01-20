@@ -12,7 +12,7 @@ def goto(page: Page):
     time.sleep(0)  # If you want to add a pause at the end of each test.
 
 
-def test_1(page: Page):
+def test_1_fixture(page: Page):
     """ load a fixture """
     def handle_route(route: Route):
         f = open(f"fixtures{os.sep}example.json")
@@ -28,8 +28,8 @@ def test_1(page: Page):
     assert "Using fixtures to represent data" in res['name']
 
 
-def test_2():
-    """ load a fixture """
+def test_2_readFile():
+    """ read file contents """
     f = open(f"fixtures{os.sep}example.json")
     requiredExample = json.load(f)
     f.close()
@@ -42,12 +42,7 @@ def test_2():
     assert json.dumps(requiredExample, sort_keys=True) == json.dumps(otherExample, sort_keys=True)
 
 
-def test_3():
-    """ read file contents """
-    pytest.skip("Playwright doesn't have a configFile")
-
-
-def test_4(page: Page):
+def test_4writeFile(page: Page):
     """ write to a file """
     response = page.goto("https://jsonplaceholder.cypress.io/users").body()
     f = open(f"fixtures{os.sep}users.json", "wb")
@@ -59,7 +54,7 @@ def test_4(page: Page):
     assert 'name' in users[0]
 
 
-def test_5(page: Page):
+def test_5_upload(page: Page):
     """ upload a file """
     # with page.expect_file_chooser() as fc:
     #     page.locator("xxx").click()
@@ -67,7 +62,7 @@ def test_5(page: Page):
     pytest.skip("https://example.cypress.io/commands/files doesn't have a file input")
 
 
-def test_6(page: Page):
+def test_6_download(page: Page):
     """ download a file """
     # with page.expect_download() as download_info:
     #     page.locator("xxx").click()

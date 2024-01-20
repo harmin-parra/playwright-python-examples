@@ -11,7 +11,7 @@ def goto(page: Page):
     time.sleep(0)  # If you want to add a pause at the end of each test.
 
 
-def test_1(page: Page):
+def test_1_get(page: Page):
     """ query DOM elements """
     expect(page.locator("#query-btn")).to_contain_text("Button")
     expect(page.locator(".query-btn")).to_contain_text("Button")
@@ -23,7 +23,7 @@ def test_1(page: Page):
     assert page.locator("[data-test-id='test-example']").evaluate("elem => $(elem).css('position')") == "static"
 
 
-def test_2(page: Page):
+def test_2_contains(page: Page):
     """ query DOM elements with matching content """
     expect(page.locator(".query-list").get_by_text("bananas")).to_have_class("third")
     expect(page.locator(".query-list").get_by_text(re.compile(r"^b\w+"))).to_have_class("third")
@@ -35,13 +35,13 @@ def test_2(page: Page):
     expect(page.locator(".query-button").get_by_role("button", name="Save Form")).to_have_class(re.compile("btn"))
 
 
-def test_3(page: Page):
+def test_3_within(page: Page):
     """ query DOM elements within a specific element """
     elem = page.locator(".query-form")
     expect(elem.locator("input").first).to_have_attribute("placeholder", "Email")
     expect(elem.locator("input").last).to_have_attribute("placeholder", "Password")
 
 
-def test_4(page: Page):
+def test_4_root(page: Page):
     """ query the root DOM element """
     pytest.skip("Playwright doesn't have a 'root' locator")

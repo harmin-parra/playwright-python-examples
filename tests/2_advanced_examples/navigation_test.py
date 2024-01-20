@@ -13,7 +13,7 @@ def goto(page: Page):
     time.sleep(0)  # If you want to add a pause at the end of each test.
 
 
-def test_1(page: Page):
+def test_1_go(page: Page):
     """ go back or forward in the browser\'s history """
     assert "navigation" in page.url
     page.go_back()
@@ -22,6 +22,11 @@ def test_1(page: Page):
     assert "navigation" in page.url
 
 
-def test_2(page: Page):
+def test_2_reload(page: Page):
     """ reload() - reload the page """
     page.reload()
+
+
+def test_3_visit(page: Page):
+    """ visit a remote page """
+    pytest.skip("Same as page.goto()")

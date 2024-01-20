@@ -13,14 +13,14 @@ def goto(page: Page):
     time.sleep(0)  # If you want to add a pause at the end of each test.
 
 
-def test_1(page: Page):
+def test_1_getCookie(page: Page):
     """ cookies() - get a browser cookies """
     page.locator("#getCookie .set-a-cookie").click()
     assert page.context.cookies()[0]['name'] == "token"
     assert page.context.cookies()[0]['value'] == "123ABC"
 
 
-def test_2(page: Page):
+def test_2_getCookies(page: Page):
     """ cookies() - get browser cookies for the current domain """
     assert len(page.context.cookies()) == 0
     page.locator("#getCookie .set-a-cookie").click()
@@ -33,7 +33,7 @@ def test_2(page: Page):
     assert 'path' in page.context.cookies()[0]
 
 
-def test_3(page: Page):
+def test_3_getAllCookies(page: Page):
     """ cookies() - get all browser cookies """
     assert len(page.context.cookies()) == 0
     page.context.add_cookies([
@@ -65,7 +65,7 @@ def test_3(page: Page):
     assert 'path' in page.context.cookies()[0]
 
 
-def test_4(page: Page):
+def test_4_setCookie(page: Page):
     """ add_cookies() - set a browser cookie """
     assert len(page.context.cookies()) == 0
     page.context.add_cookies([
@@ -78,12 +78,12 @@ def test_4(page: Page):
     assert page.context.cookies()[0]['name'] == "foo"
 
 
-def test_5(page: Page):
+def test_5_clearCookie(page: Page):
     """ clear_cookies() - clear a browser cookie by name """
     pytest.skip("Playwright doesn't allow cookie deletion by cookie name")
 
 
-def test_6(page: Page):
+def test_6_clearCookies(page: Page):
     """ clear_cookies() - clear browser cookies for the current domain """
     assert len(page.context.cookies()) == 0
     page.locator("#getCookie .set-a-cookie").click()
@@ -92,7 +92,7 @@ def test_6(page: Page):
     assert len(page.context.cookies()) == 0
 
 
-def test_7(page: Page):
+def test_7_clearAllCookies(page: Page):
     """ clear_cookies() - clear all browser cookies """
     assert len(page.context.cookies()) == 0
     page.context.add_cookies([

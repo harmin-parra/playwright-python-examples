@@ -11,7 +11,7 @@ def goto(page: Page):
     time.sleep(0)  # If you want to add a pause at the end of each test.
 
 
-def test_01(page: Page):
+def test_01_type(page: Page):
     """ fill()/press() - type into a DOM element """
     email = page.locator(".action-email")
     email.fill("fake@email.com")
@@ -35,7 +35,7 @@ def test_01(page: Page):
     # expect(page.locator("textarea")).to_have_value("disabled error checking")
 
 
-def test_02(page: Page):
+def test_02_focus(page: Page):
     """ focus() - focus on a DOM element """
     page.locator(".action-focus").focus()
     expect(page.locator(".action-focus")).to_be_focused()
@@ -43,7 +43,7 @@ def test_02(page: Page):
     expect(page.get_by_text("Password")).to_have_attribute("style", "color: orange;")
 
 
-def test_03(page: Page):
+def test_03_blur(page: Page):
     """ blur() - blur off a DOM element """
     elem = page.locator(".action-blur")
     elem.type("About to blur")
@@ -53,7 +53,7 @@ def test_03(page: Page):
     expect(page.get_by_text("Full Name")).to_have_attribute("style", "color: red;")
 
 
-def test_04(page: Page):
+def test_04_clear(page: Page):
     """ clear() - clears an input or textarea element """
     elem = page.locator(".action-clear")
     elem.fill("Clear this text")
@@ -62,7 +62,7 @@ def test_04(page: Page):
     expect(elem).to_have_value('')
 
 
-def test_05(page: Page):
+def test_05_submit(page: Page):
     """ click() - submit a form """
     page.locator(".action-form").locator("[type='text']").fill("HALFOFF")
     page.get_by_role("button", name="Submit").click()
@@ -70,7 +70,7 @@ def test_05(page: Page):
     expect(page.get_by_text("Your form has been submitted!", exact=True)).to_be_visible()
 
 
-def test_06(page: Page):
+def test_06_click(page: Page):
     """ click() - click on a DOM element """
     page.locator(".action-btn").click()
     canvas = page.locator("#action-canvas")
@@ -88,21 +88,21 @@ def test_06(page: Page):
     page.locator(".action-opacity>.btn").click(force=True)
 
 
-def test_07(page: Page):
+def test_07_dblclick(page: Page):
     """ dblclick() - double click on a DOM element """
     page.locator(".action-div").dblclick()
     expect(page.locator(".action-div")).not_to_be_visible()
     expect(page.locator(".action-input-hidden")).to_be_visible()
 
 
-def test_08(page: Page):
+def test_08_rightclick(page: Page):
     """ rightclick() - right click on a DOM element """
     page.locator(".rightclick-action-div").click(button="right")
     expect(page.locator(".rightclick-action-div")).not_to_be_visible()
     expect(page.locator(".rightclick-action-input-hidden")).to_be_visible()
 
 
-def test_09(page: Page):
+def test_09_check(page: Page):
     """ check() - check a checkbox or radio element """
     boxes = page.locator(".action-checkboxes [type='checkbox'] :enabled")
     for i in range(boxes.count()):
@@ -139,7 +139,7 @@ def test_09(page: Page):
     # expect(radio).to_be_checked()
 
 
-def test_10(page: Page):
+def test_10_uncheck(page: Page):
     """ uncheck() - uncheck a checkbox element """
     boxes = page.locator(".action-check > :not(.disabled) [type='checkbox']")
     for i in range(boxes.count()):
@@ -172,7 +172,7 @@ def test_10(page: Page):
     # expect(box).not_to_be_checked()
 
 
-def test_11(page: Page):
+def test_11_select(page: Page):
     """ select() - select an option in a <select> element """
     select1 = page.locator(".action-select")
     expect(select1).to_have_value("--Select a fruit--")
@@ -203,7 +203,7 @@ def test_11(page: Page):
     assert "fr-oranges" in options
 
 
-def test_12(page: Page):
+def test_12_scrollIntoView(page: Page):
     """ scrollIntoView() - scroll an element into view """
     button = page.locator("#scroll-horizontal button")
     button.scroll_into_view_if_needed()
@@ -218,20 +218,31 @@ def test_12(page: Page):
     expect(button).to_be_visible()
 
 
-def test_13(page: Page):
-    """ evaluate() - trigger an event on a DOM element """
-    elem = page.locator(".trigger-input-range")
+def test_13_scrollTo(page: Page):
+    """ scrollTo() - scroll the window or element to a position """
+    pytest.skip("Playwright doesn't have scrolling built-in functions")
+
+
+def test_14_trigger(page: Page):
+    """ Trigger an event on a DOM element """
+
+    # Set value to the range-input
+    elem = page.locator('.trigger-input-range')
+    value = 25
+    elem.evaluate("(elem, val) => {"
+                  "elem.value = val;"
+                  "elem.dispatchEvent(new Event('input', { 'bubbles': true }));"
+                  "elem.dispatchEvent(new Event('change', { 'bubbles': true }));"
+                  "}", value)
+    assert int(elem.evaluate("elem => elem.value")) == 25
+
+    # Move range-input slider
     width = elem.evaluate("elem => { return elem.getBoundingClientRect().width }")
     elem.hover(position={'x': 0, 'y': 0})
     page.mouse.down()
-    elem.hover(position={'x': width*25/100, 'y': 0})
+    elem.hover(position={'x': width * 25 / 100, 'y': 0})
     page.mouse.up()
     # Assert 24 <= elem.value <= 26
     expect(elem).to_have_value(re.compile(r"^2[456]$"))
     assert 24 <= int(elem.evaluate("elem => elem.value")) <= 25
     assert 24 <= int(elem.evaluate("elem => $(elem).val()")) <= 25
-
-
-def test_14(page: Page):
-    """ scrollTo() - scroll the window or element to a position """
-    pytest.skip("Playwright doesn't have scrolling built-in functions")

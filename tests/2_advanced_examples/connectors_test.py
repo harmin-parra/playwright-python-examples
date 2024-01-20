@@ -10,7 +10,7 @@ def goto(page: Page):
     time.sleep(0)  # If you want to add a pause at the end of each test.
 
 
-def test_1(page: Page):
+def test_1_each(page: Page):
     """ each() - iterate over an array of elements """
     elms = page.locator(".connectors-its-ul>li")
     for i in range(elms.count()):
@@ -22,12 +22,12 @@ def test_1(page: Page):
         )
 
 
-def test_2(page: Page):
+def test_2_its(page: Page):
     """ get properties on the current subject """
     assert page.locator(".connectors-its-ul>li").count() > 2
 
 
-def test_3(page: Page):
+def test_3_invoke(page: Page):
     """ evaluate() - invoke a function on the current subject """
     elem = page.locator(".connectors-div")
     expect(elem).not_to_be_visible()
@@ -36,7 +36,7 @@ def test_3(page: Page):
     expect(elem).to_be_visible()
 
 
-def test_4():
+def test_4_spread():
     """ spread an array as individual args to function """
     arr = ['foo', 'bar', 'baz']
 
@@ -47,10 +47,11 @@ def test_4():
     func(*arr)
 
 
-def test_5(page: Page):
+def test_5_then(page: Page):
     """ invokes a callback function with the current subject """
     elms = page.locator(".connectors-list > li")
     assert elms.count() == 3, "3 items"
+    expect(elms).to_have_count(3)
     expect(elms.nth(0)).to_contain_text("Walk the dog")
     expect(elms.nth(1)).to_contain_text("Feed the cat")
     expect(elms.nth(2)).to_contain_text("Write JavaScript")
