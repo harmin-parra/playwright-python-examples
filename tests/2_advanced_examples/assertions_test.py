@@ -43,7 +43,7 @@ def test_3():
     assert True is True
     obj = {'foo': 'bar'}
     assert obj == obj
-    assert obj == { 'foo' :'bar' }
+    assert obj == {'foo': 'bar'}
     assert re.search("bar$", "FooBar", re.IGNORECASE)
 
 
