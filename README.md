@@ -12,7 +12,7 @@ If you find a better solution or do you have an alternative solution to one of t
 1. Install [Playwright](https://playwright.dev/python/docs/intro) for python.
 
 2. Download the project
-   
+
    ``git checkout git@github.com:harmin-parra/playwright-python-examples.git``
 
    or download and unzip the [zip file](https://github.com/harmin-parra/playwright-python-examples/archive/refs/heads/main.zip) of the project
@@ -24,9 +24,9 @@ If you find a better solution or do you have an alternative solution to one of t
 4. Execute the test
 
    * with headless browser
-  
-     `` pytest tests``
+
+     ``pytest tests``
 
    * with headed browser
 
-     `` pytest --headed tests``
+     ``pytest --headed tests``
