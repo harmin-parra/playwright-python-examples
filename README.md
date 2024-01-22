@@ -1,6 +1,6 @@
 # playwright-python-examples
 
-These are the [Cypress](https://example.cypress.io/) sample tests, but they have been rewritten into [Playwright](https://playwright.dev/python/docs/intro) and Python (pytest).
+These are the [Cypress](https://example.cypress.io/) sample tests, but they have been rewritten into [Playwright](https://playwright.dev/python/docs/intro) (python).
 
 Be aware that some Cypress commands don't have an equivalent in Playwright, thus some workarounds are proposed whenever possible.
 
