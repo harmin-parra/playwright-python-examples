@@ -61,3 +61,4 @@ def test_6(page: Page, item_checked):
     tasks = page.locator(".todo-list li")
     expect(tasks).to_have_count(1)
     expect(tasks).not_to_have_text("Pay electric bill")
+    expect(tasks).to_have_text("Walk the dog")
