@@ -63,7 +63,7 @@ def test_4(page: Page):
 
 
 def test_5(page: Page):
-    """ finds element by class name regex """
+    """ assert element's class name using regex """
     elms = page.locator(".docs-header div")
     assert elms.count() == 1
     classes = elms.first.get_attribute("class").split()
