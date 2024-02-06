@@ -104,13 +104,6 @@ def test_9(page: Page):
     """ retries the function callback until assertions pass """
     # Playwright and Python don't allow asynchronous callbacks in assertions
     elem = page.locator("#random-number")
-
-    def wait_for_integer():
-        while True:
-            try:
-                value = int(elem.text_content())
-                return value
-            except:
-                pass
-
-    assert 1 < wait_for_integer() < 10
+    expect(elem).to_have_text(re.compile(r"^[0-9]+$"), timeout=10000);
+    value = int(elem.text_content())
+    assert 1 < value <= 10
