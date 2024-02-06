@@ -80,7 +80,6 @@ def test_1b_request(api_request_context):
 
 def test_2_intercept(page: Page):
     """ route responses to matching requests """
-    message = "whoa, this comment does not exist"
     with page.expect_response("**/comments/*") as response_info:
         page.locator(".network-btn").click()
     assert response_info.value.status in (200, 304)
@@ -91,6 +90,7 @@ def test_2_intercept(page: Page):
     assert 'email' in body
     assert body['name'] == "Using POST in cy.intercept()"
 
+    message = "whoa, this comment does not exist"
     def handle_route(route: Route):
         route.fulfill(
             status=404,
