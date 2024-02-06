@@ -44,10 +44,10 @@ def test_3_focused(page: Page):
 
 def test_4_screenshot(page: Page):
     """ screenshot() - take a screenshot """
-    page.screenshot(path=f"screenshots{os.sep}screenshot-1.png")
+    page.screenshot(path=f"tests{os.sep}screenshots{os.sep}screenshot-1.png")
 
     """ screenshot() - change default config of screenshots """
-    page.screenshot(path=f"screenshots{os.sep}screenshot-2.png",
+    page.screenshot(path=f"tests{os.sep}screenshots{os.sep}screenshot-2.png",
                     clip={'x': 0, 'y': 0, 'width': 200, 'height': 300},
                     mask=[page.locator(".foo")])
 
