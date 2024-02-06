@@ -10,4 +10,4 @@
 **/*.pyc
 
 tests/fixtures/users.json
-tests/screenshots/*
+screenshots/*

@@ -15,7 +15,7 @@ def goto(page: Page):
 def test_1_fixture(page: Page):
     """ load a fixture """
     def handle_route(route: Route):
-        f = open(f"fixtures{os.sep}example.json")
+        f = open(f"tests{os.sep}fixtures{os.sep}example.json")
         route.fulfill(
             json=json.load(f),
         )
@@ -30,7 +30,7 @@ def test_1_fixture(page: Page):
 
 def test_2_readFile():
     """ read file contents """
-    f = open(f"fixtures{os.sep}example.json")
+    f = open(f"tests{os.sep}fixtures{os.sep}example.json")
     requiredExample = json.load(f)
     f.close()
     otherExample = json.loads("""
@@ -42,13 +42,13 @@ def test_2_readFile():
     assert json.dumps(requiredExample, sort_keys=True) == json.dumps(otherExample, sort_keys=True)
 
 
-def test_4writeFile(page: Page):
+def test_4_writeFile(page: Page):
     """ write to a file """
     response = page.goto("https://jsonplaceholder.cypress.io/users").body()
-    f = open(f"fixtures{os.sep}users.json", "wb")
+    f = open(f"tests{os.sep}fixtures{os.sep}users.json", "wb")
     f.write(response)
     f.close()
-    f = open(f"fixtures{os.sep}users.json")
+    f = open(f"tests{os.sep}fixtures{os.sep}users.json")
     users = json.load(f)
     f.close()
     assert 'name' in users[0]
