@@ -2,7 +2,9 @@ import json
 import os
 import pytest
 import time
-from playwright.sync_api import Page, Route
+
+from playwright.async_api import async_playwright
+from playwright.sync_api import Page, Route, sync_playwright
 
 
 @pytest.fixture(autouse=True)
@@ -28,7 +30,7 @@ def test_1_fixture(page: Page):
     assert "Using fixtures to represent data" in res['name']
 
 
-def test_2_readFile():
+def test_2_readfile():
     """ read file contents """
     f = open(f"tests{os.sep}fixtures{os.sep}example.json")
     requiredExample = json.load(f)
@@ -42,7 +44,7 @@ def test_2_readFile():
     assert json.dumps(requiredExample, sort_keys=True) == json.dumps(otherExample, sort_keys=True)
 
 
-def test_4_writeFile(page: Page):
+def test_4_writefile(page: Page):
     """ write to a file """
     response = page.goto("https://jsonplaceholder.cypress.io/users").body()
     f = open(f"tests{os.sep}fixtures{os.sep}users.json", "wb")
@@ -52,6 +54,14 @@ def test_4_writeFile(page: Page):
     users = json.load(f)
     f.close()
     assert 'name' in users[0]
+
+    # with sync_playwright() as p:
+    #     context = p.request.new_context(base_url="https://jsonplaceholder.cypress.io")
+    #     response = context.get("/users")
+    #     assert response.ok
+    #     assert response.status == 200
+    #     f = open(f"tests{os.sep}fixtures{os.sep}users.json", "wb")
+    #     f.write(response.body())
 
 
 def test_5_upload(page: Page):
