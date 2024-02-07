@@ -31,15 +31,15 @@ def test_1_fixture(page: Page):
 def test_2_readfile():
     """ read file contents """
     f = open(f"tests{os.sep}fixtures{os.sep}example.json")
-    requiredExample = json.load(f)
+    example1 = json.load(f)
     f.close()
-    otherExample = json.loads("""
+    example2 = json.loads("""
         {
             "body": "Fixtures are a great way to mock data for responses to routes",
             "email": "hello@cypress.io",
             "name": "Using fixtures to represent data"
         }""")
-    assert json.dumps(requiredExample, sort_keys=True) == json.dumps(otherExample, sort_keys=True)
+    assert json.dumps(example1, sort_keys=True) == json.dumps(example2, sort_keys=True)
 
 
 def test_4_writefile(page: Page, playwright: Playwright):
