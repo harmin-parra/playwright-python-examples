@@ -15,6 +15,10 @@ def get_values(element):
     return element.evaluate("elem => $(elem).val()")
 
 
+def set_value(element, value):
+    return element.evaluate("(elem, val) => elem.setAttribute('value', val);", value)
+
+
 def invoke(element, func):
     """ Invokes a JQuery function on the HTML element """
     #func2 = "elem => $(elem).$var()"
